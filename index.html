@@ -61,8 +61,7 @@
   <div class="js-todo-list todo-grid"></div>
 
   <script>
-  
-    const todoList = [];
+    let todoList = JSON.parse(localStorage.getItem('todoList')) || [];
 
     renderTodoList();
 
@@ -86,6 +85,7 @@
         .forEach((deleteButton, index) => {
           deleteButton.addEventListener('click', () => {
             todoList.splice(index, 1);
+            saveToLocalStorage();
             renderTodoList();
           });
         });
@@ -108,10 +108,15 @@
         dueDate
       });
 
+      saveToLocalStorage();
       inputElement.value = '';
       dateInputElement.value = '';
 
       renderTodoList();
+    }
+
+    function saveToLocalStorage() {
+      localStorage.setItem('todoList', JSON.stringify(todoList));
     }
   </script>
 </body>
